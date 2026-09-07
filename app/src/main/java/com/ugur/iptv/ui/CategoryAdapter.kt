@@ -57,7 +57,12 @@ class CategoryAdapter(
                     if (pos != RecyclerView.NO_POSITION) {
                         selectedPosition = pos
                     }
+                    view.animate().scaleX(1.04f).scaleY(1.04f).translationZ(8f).setDuration(120).start()
+                    tvName.setTextColor(android.graphics.Color.parseColor("#00F2FE"))
                     onCategorySelected(category)
+                } else {
+                    view.animate().scaleX(1.0f).scaleY(1.0f).translationZ(0f).setDuration(120).start()
+                    tvName.setTextColor(android.graphics.Color.parseColor("#E0E6ED"))
                 }
             }
         }

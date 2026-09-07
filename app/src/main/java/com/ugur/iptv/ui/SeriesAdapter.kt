@@ -1,5 +1,6 @@
 package com.ugur.iptv.ui
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,7 @@ import com.ugur.iptv.R
 import com.ugur.iptv.data.SeriesItem
 
 class SeriesAdapter(
-    private val onSeriesFocused: (SeriesItem) -> Unit,
+    private val onSeriesFocused: (series: SeriesItem, position: Int, totalCount: Int) -> Unit,
     private val onSeriesClicked: (SeriesItem) -> Unit
 ) : RecyclerView.Adapter<SeriesAdapter.SeriesViewHolder>() {
 
@@ -40,6 +41,11 @@ class SeriesAdapter(
         private val tvRating: TextView = itemView.findViewById(R.id.tvSeriesRating)
         private val tvTitle: TextView = itemView.findViewById(R.id.tvSeriesTitle)
         private val tvGenre: TextView = itemView.findViewById(R.id.tvSeriesGenre)
+        private val ivPlayBadge: ImageView = itemView.findViewById(R.id.ivSeriesPlayBadge)
+
+        init {
+            itemView.clipToOutline = true
+        }
 
         fun bind(series: SeriesItem) {
             tvTitle.text = series.name
@@ -48,12 +54,16 @@ class SeriesAdapter(
 
             val coverUrl = series.cover
             if (!coverUrl.isNullOrBlank()) {
-                Glide.with(itemView.context)
-                    .load(coverUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.ic_channel_placeholder)
-                    .error(R.drawable.ic_channel_placeholder)
-                    .into(ivCover)
+                try {
+                    Glide.with(itemView.context)
+                        .load(coverUrl)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.ic_channel_placeholder)
+                        .error(R.drawable.ic_channel_placeholder)
+                        .into(ivCover)
+                } catch (e: Exception) {
+                    ivCover.setImageResource(R.drawable.ic_channel_placeholder)
+                }
             } else {
                 ivCover.setImageResource(R.drawable.ic_channel_placeholder)
             }
@@ -62,9 +72,20 @@ class SeriesAdapter(
                 onSeriesClicked(series)
             }
 
-            itemView.setOnFocusChangeListener { _, hasFocus ->
+            itemView.setOnFocusChangeListener { view, hasFocus ->
+                view.isSelected = hasFocus
                 if (hasFocus) {
-                    onSeriesFocused(series)
+                    ivPlayBadge.visibility = View.VISIBLE
+                    tvTitle.setTextColor(Color.parseColor("#00F2FE"))
+                    view.animate().scaleX(1.10f).scaleY(1.10f).translationZ(20f).setDuration(150).start()
+                    val pos = bindingAdapterPosition
+                    if (pos != RecyclerView.NO_POSITION) {
+                        onSeriesFocused(series, pos, seriesList.size)
+                    }
+                } else {
+                    ivPlayBadge.visibility = View.GONE
+                    tvTitle.setTextColor(Color.WHITE)
+                    view.animate().scaleX(1.0f).scaleY(1.0f).translationZ(0f).setDuration(150).start()
                 }
             }
         }

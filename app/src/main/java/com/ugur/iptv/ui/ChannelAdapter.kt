@@ -73,7 +73,14 @@ class ChannelAdapter(
                     if (pos != RecyclerView.NO_POSITION) {
                         selectedIndex = pos
                     }
+                    view.animate().scaleX(1.04f).scaleY(1.04f).translationZ(10f).setDuration(120).start()
+                    tvName.setTextColor(android.graphics.Color.parseColor("#00F2FE"))
+                    tvNum.setTextColor(android.graphics.Color.parseColor("#00F2FE"))
                     onChannelFocused(channel)
+                } else {
+                    view.animate().scaleX(1.0f).scaleY(1.0f).translationZ(0f).setDuration(120).start()
+                    tvName.setTextColor(android.graphics.Color.WHITE)
+                    tvNum.setTextColor(android.graphics.Color.parseColor("#00D2FF"))
                 }
             }
 

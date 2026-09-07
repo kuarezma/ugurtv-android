@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Focused State: Ultra prominent 4.5dp glowing neon cyan stroke + subtle tint -->
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#2600F2FE" />
+            <stroke android:width="4.5dp" android:color="#00F2FE" />
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+    <!-- Selected State: Vivid Cyan Rim -->
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#1A00F2FE" />
+            <stroke android:width="3dp" android:color="#00A8FF" />
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+    <!-- Normal State: Subtle semi-transparent border -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent" />
+            <stroke android:width="1dp" android:color="#20FFFFFF" />
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+</selector>

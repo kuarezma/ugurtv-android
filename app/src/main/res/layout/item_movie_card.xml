@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="160dp"
     android:layout_height="240dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="16dp"
+    android:layout_margin="10dp"
     android:background="@drawable/bg_movie_card"
+    android:foreground="@drawable/bg_movie_card_focus"
     android:clickable="true"
     android:focusable="true">
 
@@ -26,7 +26,11 @@
         android:layout_margin="10dp"
         android:background="@drawable/bg_rating_badge"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingTop="3dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="3dp">
 
         <ImageView
             android:layout_width="14dp"
@@ -44,6 +48,18 @@
             android:textStyle="bold"
             tools:text="8.9" />
     </LinearLayout>
+
+    <!-- Center Play Icon (Appears as prominent glowing indicator) -->
+    <ImageView
+        android:id="@+id/ivMoviePlayBadge"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_badge_live"
+        android:contentDescription="@null"
+        android:padding="10dp"
+        android:src="@drawable/ic_play"
+        android:visibility="gone" />
 
     <!-- Bottom Dark Gradient Info Panel -->
     <LinearLayout
@@ -89,13 +105,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_badge_live"
-                android:paddingStart="4dp"
+                android:paddingStart="6dp"
                 android:paddingTop="1dp"
-                android:paddingEnd="4dp"
+                android:paddingEnd="6dp"
                 android:paddingBottom="1dp"
                 android:text="4K"
                 android:textColor="#FFFFFF"
-                android:textSize="9sp"
+                android:textSize="10sp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

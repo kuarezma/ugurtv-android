@@ -107,27 +107,45 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavRail() {
-        binding.btnNavLiveTv.setOnClickListener { switchNav(NavSection.LIVE_TV) }
-        binding.btnNavMovies.setOnClickListener { switchNav(NavSection.MOVIES) }
-        binding.btnNavSeries.setOnClickListener { switchNav(NavSection.SERIES) }
-        binding.btnNavFavorites.setOnClickListener { switchNav(NavSection.FAVORITES) }
+        binding.btnNavLiveTv.setOnClickListener {
+            switchNav(NavSection.LIVE_TV)
+            val child = binding.rvCategories.layoutManager?.findViewByPosition(0)
+            child?.requestFocus() ?: binding.rvCategories.requestFocus()
+        }
+        binding.btnNavMovies.setOnClickListener {
+            switchNav(NavSection.MOVIES)
+            val child = binding.rvMovies.layoutManager?.findViewByPosition(0)
+            child?.requestFocus() ?: binding.btnHeroPlayMovie.requestFocus()
+        }
+        binding.btnNavSeries.setOnClickListener {
+            switchNav(NavSection.SERIES)
+            val child = binding.rvSeries.layoutManager?.findViewByPosition(0)
+            child?.requestFocus() ?: binding.btnHeroPlaySeries.requestFocus()
+        }
+        binding.btnNavFavorites.setOnClickListener {
+            switchNav(NavSection.FAVORITES)
+            val child = binding.rvChannels.layoutManager?.findViewByPosition(0)
+            child?.requestFocus() ?: binding.rvChannels.requestFocus()
+        }
         binding.btnNavSearch.setOnClickListener { showSearchDialog() }
         binding.btnNavSettings.setOnClickListener { showSettingsDialog() }
 
-        // Focus listeners for visual highlight on TV remote movement
+        // Focus animation on TV remote movement
         val navButtons = listOf(
-            binding.btnNavLiveTv to NavSection.LIVE_TV,
-            binding.btnNavMovies to NavSection.MOVIES,
-            binding.btnNavSeries to NavSection.SERIES,
-            binding.btnNavFavorites to NavSection.FAVORITES
+            binding.btnNavLiveTv,
+            binding.btnNavMovies,
+            binding.btnNavSeries,
+            binding.btnNavFavorites,
+            binding.btnNavSearch,
+            binding.btnNavSettings
         )
 
-        navButtons.forEach { (view, section) ->
-            view.setOnFocusChangeListener { _, hasFocus ->
+        navButtons.forEach { view ->
+            view.setOnFocusChangeListener { v, hasFocus ->
                 if (hasFocus) {
-                    updateNavSelection(section)
+                    v.animate().scaleX(1.08f).scaleY(1.08f).translationZ(8f).setDuration(120).start()
                 } else {
-                    updateNavSelection(currentSection)
+                    v.animate().scaleX(1.0f).scaleY(1.0f).translationZ(0f).setDuration(120).start()
                 }
             }
         }
@@ -151,6 +169,7 @@ class MainActivity : AppCompatActivity() {
                 binding.sectionLiveTv.visibility = View.VISIBLE
                 binding.sectionMovies.visibility = View.GONE
                 binding.sectionSeries.visibility = View.GONE
+                binding.tvLiveSectionBadge.text = "📺 CANLI"
                 val defaultCat = allCategories.firstOrNull { it.categoryId == "all" }
                     ?: allCategories.firstOrNull()
                 defaultCat?.let { selectCategory(it) }
@@ -162,8 +181,9 @@ class MainActivity : AppCompatActivity() {
                 binding.sectionMovies.visibility = View.VISIBLE
                 binding.sectionSeries.visibility = View.GONE
                 movieAdapter.submitList(allMovies)
-                if (allMovies.isNotEmpty() && currentHeroMovie == null) {
-                    setHeroMovie(allMovies[0])
+                binding.tvMovieTotalCount.text = "${allMovies.size} Film"
+                if (allMovies.isNotEmpty()) {
+                    setHeroMovie(allMovies[0], 0, allMovies.size)
                 }
             }
             NavSection.SERIES -> {
@@ -173,14 +193,16 @@ class MainActivity : AppCompatActivity() {
                 binding.sectionMovies.visibility = View.GONE
                 binding.sectionSeries.visibility = View.VISIBLE
                 seriesAdapter.submitList(allSeries)
-                if (allSeries.isNotEmpty() && currentHeroSeries == null) {
-                    setHeroSeries(allSeries[0])
+                binding.tvSeriesTotalCount.text = "${allSeries.size} Dizi"
+                if (allSeries.isNotEmpty()) {
+                    setHeroSeries(allSeries[0], 0, allSeries.size)
                 }
             }
             NavSection.FAVORITES -> {
                 binding.sectionLiveTv.visibility = View.VISIBLE
                 binding.sectionMovies.visibility = View.GONE
                 binding.sectionSeries.visibility = View.GONE
+                binding.tvLiveSectionBadge.text = "⭐ FAVORİLER"
                 allCategories.firstOrNull { it.categoryId == "favorites" }?.let { selectCategory(it) }
             }
         }
@@ -226,7 +248,9 @@ class MainActivity : AppCompatActivity() {
 
         // 3. Movies Grid (5 columns for 65" TV)
         movieAdapter = MovieAdapter(
-            onMovieFocused = { movie -> setHeroMovie(movie) },
+            onMovieFocused = { movie, position, totalCount ->
+                setHeroMovie(movie, position, totalCount)
+            },
             onMovieClicked = { movie -> playMovie(movie) }
         )
         binding.rvMovies.apply {
@@ -237,7 +261,9 @@ class MainActivity : AppCompatActivity() {
 
         // 4. Series Grid (5 columns)
         seriesAdapter = SeriesAdapter(
-            onSeriesFocused = { series -> setHeroSeries(series) },
+            onSeriesFocused = { series, position, totalCount ->
+                setHeroSeries(series, position, totalCount)
+            },
             onSeriesClicked = { series -> playSeries(series) }
         )
         binding.rvSeries.apply {
@@ -624,10 +650,13 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "${result.size} dizi bulundu", Toast.LENGTH_SHORT).show()
     }
 
-    private fun setHeroMovie(movie: MovieItem) {
+    private fun setHeroMovie(movie: MovieItem, position: Int = 0, totalCount: Int = 0) {
         currentHeroMovie = movie
         binding.tvHeroMovieTitle.text = movie.stream.name
         binding.tvHeroMovieDesc.text = "${movie.categoryName} • IMDb ${movie.ratingFormatted} • ${movie.year}"
+        if (totalCount > 0) {
+            binding.tvMovieFocusIndicator.text = "▶ Seçili: ${position + 1} / $totalCount — ${movie.stream.name}"
+        }
 
         if (!isFinishing && !isDestroyed) {
             try {
@@ -644,10 +673,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setHeroSeries(series: SeriesItem) {
+    private fun setHeroSeries(series: SeriesItem, position: Int = 0, totalCount: Int = 0) {
         currentHeroSeries = series
         binding.tvHeroSeriesTitle.text = series.name
         binding.tvHeroSeriesDesc.text = "${series.genre ?: "Dizi"} • IMDb ${series.rating ?: "8.5"}\n${series.plot ?: ""}"
+        if (totalCount > 0) {
+            binding.tvSeriesFocusIndicator.text = "▶ Seçili: ${position + 1} / $totalCount — ${series.name}"
+        }
 
         if (!isFinishing && !isDestroyed) {
             try {
