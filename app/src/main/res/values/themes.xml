@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.UgurTV" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/tv_bg_main</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:textColorPrimary">@color/tv_text_primary</item>
+        <item name="android:textColorSecondary">@color/tv_text_secondary</item>
+        <item name="colorPrimary">@color/tv_accent</item>
+        <item name="colorAccent">@color/tv_accent</item>
+        <item name="android:navigationBarColor">@color/tv_bg_main</item>
+        <item name="android:statusBarColor">@color/tv_bg_main</item>
+    </style>
+
+    <style name="Theme.UgurTV.Fullscreen" parent="Theme.UgurTV">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:keepScreenOn">true</item>
+    </style>
+</resources>

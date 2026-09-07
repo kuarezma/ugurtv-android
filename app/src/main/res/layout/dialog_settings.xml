@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="480dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_channel_item"
+    android:orientation="vertical"
+    android:padding="28dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/account_info"
+        android:textColor="@color/tv_accent"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDialogUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/tv_text_primary"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvDialogServer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/tv_text_secondary"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvDialogStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/tv_text_secondary"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvDialogExpires"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/tv_text_secondary"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btnDialogLogout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_badge_live"
+        android:focusable="true"
+        android:text="@string/btn_logout"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/btnDialogClose"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_channel_item"
+        android:focusable="true"
+        android:text="@string/btn_close"
+        android:textColor="@color/tv_text_primary"
+        android:textSize="15sp" />
+</LinearLayout>

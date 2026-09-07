@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Uğur TV</string>
+    <string name="app_tagline">Vestel Android TV İçin Hızlı &amp; Akıcı IPTV</string>
+    
+    <!-- Login -->
+    <string name="login_title">Xtream Codes Girişi</string>
+    <string name="login_subtitle">Lütfen IPTV sağlayıcınızın bilgilerini girin</string>
+    <string name="hint_server_url">Sunucu Adresi (Örn: http://sunucu.com:8080)</string>
+    <string name="hint_username">Kullanıcı Adı</string>
+    <string name="hint_password">Şifre</string>
+    <string name="btn_login">GİRİŞ YAP</string>
+    <string name="btn_demo">TEST / DEMO MODU</string>
+    <string name="remember_me">Beni Hatırla ve Otomatik Bağlan</string>
+    <string name="login_connecting">Sunucuya bağlanılıyor, lütfen bekleyin…</string>
+    <string name="login_error_fields">Lütfen tüm alanları eksiksiz doldurun.</string>
+    <string name="login_error_connection">Sunucuya bağlanılamadı. Bilgileri veya internet bağlantınızı kontrol edin.</string>
+    
+    <!-- Main / Guide Screen -->
+    <string name="cat_all">Tüm Kanallar</string>
+    <string name="cat_favorites">Favorilerim</string>
+    <string name="cat_history">Son İzlenenler</string>
+    <string name="cat_settings">Ayarlar &amp; Hesap</string>
+    <string name="search_hint">Kanal Ara…</string>
+    <string name="no_channels_found">Bu kategoride kanal bulunamadı.</string>
+    <string name="channel_count_format">%1$d Kanal</string>
+    <string name="live_badge">CANLI</string>
+    <string name="press_ok_fullscreen">Tam Ekran İçin OK Tuşuna Basın</string>
+    
+    <!-- Player & OSD -->
+    <string name="aspect_ratio">Görüntü Oranı</string>
+    <string name="aspect_fit">Orantılı (Fit)</string>
+    <string name="aspect_fill">Tam Ekranı Kapla (Fill)</string>
+    <string name="aspect_16_9">16:9 Geniş Ekran</string>
+    <string name="aspect_4_3">4:3 Standart</string>
+    <string name="audio_tracks">Ses Parçaları</string>
+    <string name="stream_loading">Kanal açılıyor…</string>
+    <string name="stream_error">Yayın başlatılamadı. Kanal geçici olarak devre dışı olabilir.</string>
+    <string name="fav_added">Favorilere eklendi</string>
+    <string name="fav_removed">Favorilerden çıkarıldı</string>
+    <string name="channel_zap_hint">Kanal Değiştir: ▲ / ▼ | Kanal Listesi: ◀ | Bilgi: OK</string>
+    
+    <!-- Settings Dialog -->
+    <string name="account_info">Hesap Bilgileri</string>
+    <string name="status_active">Aktif</string>
+    <string name="status_expired">Süresi Dolmuş</string>
+    <string name="expires_at">Bitiş Tarihi: %1$s</string>
+    <string name="server_url_label">Sunucu: %1$s</string>
+    <string name="btn_logout">HESAPTAN ÇIKIŞ YAP</string>
+    <string name="btn_close">KAPAT</string>
+</resources>
