@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:background="@drawable/bg_badge_live"
-        android:text="CANLI"
+        android:text="@string/live_badge"
         android:textColor="#FFFFFF"
         android:textSize="10sp"
         android:textStyle="bold" />

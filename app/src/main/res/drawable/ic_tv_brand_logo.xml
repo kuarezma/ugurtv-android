@@ -1,0 +1,36 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="128dp"
+    android:height="128dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+    <!-- Outer Glow Circle -->
+    <path
+        android:fillColor="#1A00F2FE"
+        android:pathData="M50,4 C75.4,4 96,24.6 96,50 C96,75.4 75.4,96 50,96 C24.6,96 4,75.4 4,50 C4,24.6 24.6,4 50,4 Z" />
+    <!-- TV Outer Metallic Frame -->
+    <path
+        android:fillColor="#162035"
+        android:pathData="M12,22 L88,22 C91.3,22 94,24.7 94,28 L94,68 C94,71.3 91.3,74 88,74 L12,74 C8.7,74 6,71.3 6,68 L6,28 C6,24.7 8.7,22 12,22 Z" />
+    <!-- TV Bezel Neon Border -->
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M14,24 L86,24 C88.2,24 90,25.8 90,28 L90,66 C90,68.2 88.2,70 86,70 L14,70 C11.8,70 10,68.2 10,66 L10,28 C10,25.8 11.8,24 14,24 Z" />
+    <!-- TV Screen Glass -->
+    <path
+        android:fillColor="#060913"
+        android:pathData="M15,26 L85,26 C86.1,26 87,26.9 87,28 L87,64 C87,65.1 86.1,66 85,66 L15,66 C13.9,66 13,65.1 13,64 L13,28 C13,26.9 13.9,26 15,26 Z" />
+    <!-- Play Triangle Button Gradient Accent -->
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M42,36 L66,46 L42,56 Z" />
+    <path
+        android:fillColor="#7F00FF"
+        android:pathData="M42,46 L66,46 L42,56 Z" />
+    <!-- TV Stand Base -->
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M44,74 L56,74 L60,82 L40,82 Z" />
+    <path
+        android:fillColor="#7F00FF"
+        android:pathData="M32,82 L68,82 L68,85 L32,85 Z" />
+</vector>

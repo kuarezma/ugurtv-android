@@ -55,3 +55,64 @@ data class ChannelItem(
     val streamUrl: String,
     var isFavorite: Boolean = false
 ) : Serializable
+
+data class VodCategory(
+    @SerializedName("category_id") val categoryId: String,
+    @SerializedName("category_name") val categoryName: String,
+    @SerializedName("parent_id") val parentId: Int = 0,
+    var movieCount: Int = 0
+) : Serializable
+
+data class VodStream(
+    @SerializedName("num") val num: Any? = null,
+    @SerializedName("name") val name: String,
+    @SerializedName("stream_type") val streamType: String? = null,
+    @SerializedName("stream_id") val streamId: Int,
+    @SerializedName("stream_icon") val streamIcon: String? = null,
+    @SerializedName("rating") val rating: Any? = null,
+    @SerializedName("rating_5based") val rating5Based: Any? = null,
+    @SerializedName("added") val added: String? = null,
+    @SerializedName("category_id") val categoryId: String? = null,
+    @SerializedName("container_extension") val containerExtension: String? = "mp4"
+) : Serializable
+
+data class MovieItem(
+    val index: Int,
+    val stream: VodStream,
+    val categoryName: String,
+    val streamUrl: String,
+    val ratingFormatted: String,
+    val year: String = "",
+    var isFavorite: Boolean = false
+) : Serializable
+
+data class SeriesCategory(
+    @SerializedName("category_id") val categoryId: String,
+    @SerializedName("category_name") val categoryName: String,
+    @SerializedName("parent_id") val parentId: Int = 0,
+    var seriesCount: Int = 0
+) : Serializable
+
+data class SeriesItem(
+    @SerializedName("num") val num: Any? = null,
+    @SerializedName("name") val name: String,
+    @SerializedName("series_id") val seriesId: Int,
+    @SerializedName("cover") val cover: String? = null,
+    @SerializedName("plot") val plot: String? = null,
+    @SerializedName("cast") val cast: String? = null,
+    @SerializedName("director") val director: String? = null,
+    @SerializedName("genre") val genre: String? = null,
+    @SerializedName("releaseDate") val releaseDate: String? = null,
+    @SerializedName("last_modified") val lastModified: String? = null,
+    @SerializedName("rating") val rating: Any? = null,
+    @SerializedName("rating_5based") val rating5Based: Any? = null,
+    @SerializedName("category_id") val categoryId: String? = null
+) : Serializable
+
+data class EpisodeItem(
+    @SerializedName("id") val id: String? = null,
+    @SerializedName("episode_num") val episodeNum: Any? = null,
+    @SerializedName("title") val title: String? = null,
+    @SerializedName("container_extension") val containerExtension: String? = "mp4",
+    var streamUrl: String = ""
+) : Serializable

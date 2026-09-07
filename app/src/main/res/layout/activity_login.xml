@@ -22,10 +22,10 @@
         tools:ignore="RtlSymmetry">
 
         <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/tv_banner" />
+            android:src="@drawable/ic_tv_brand_logo" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
             android:fontFamily="sans-serif-black"
             android:text="@string/app_name"
             android:textColor="@color/tv_accent"
-            android:textSize="44sp" />
+            android:textSize="46sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Vestel 65&quot; 4K Android TV 14 Optimize • Sıfır Gecikme • Hızlı Zapping"
+            android:text="@string/brand_subtext"
             android:textColor="@color/tv_text_muted"
             android:textSize="14sp" />
     </LinearLayout>
@@ -59,8 +59,8 @@
         android:layout_width="540dp"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/tv_bg_pane"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -165,8 +165,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/btn_login"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                app:backgroundTint="@null" />
+                android:textSize="18sp" />
 
             <!-- Demo Mode Button -->
             <Button
@@ -178,8 +177,7 @@
                 android:focusable="true"
                 android:text="@string/btn_demo"
                 android:textColor="@color/tv_text_secondary"
-                android:textSize="15sp"
-                app:backgroundTint="@null" />
+                android:textSize="15sp" />
 
             <!-- Loading Indicator -->
             <ProgressBar

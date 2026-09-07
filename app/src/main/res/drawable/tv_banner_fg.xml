@@ -1,0 +1,26 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="320dp"
+    android:height="180dp"
+    android:viewportWidth="320"
+    android:viewportHeight="180">
+    <!-- TV Emblem on Left -->
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M45,45 L115,45 C118,45 120,47 120,50 L120,95 C120,98 118,100 115,100 L45,100 C42,100 40,98 40,95 L40,50 C40,47 42,45 45,45 Z" />
+    <path
+        android:fillColor="#080C16"
+        android:pathData="M48,48 L112,48 C113.5,48 115,49.5 115,51 L115,92 C115,93.5 113.5,95 112,95 L48,95 C46.5,95 45,93.5 45,92 L45,51 C45,49.5 46.5,48 48,48 Z" />
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M72,60 L92,71 L72,82 Z" />
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M70,100 L90,100 L94,110 L66,110 Z" />
+    <path
+        android:fillColor="#7F00FF"
+        android:pathData="M56,110 L104,110 L104,113 L56,113 Z" />
+    <!-- 4K Ultra HD Badge -->
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M140,115 L210,115 C212,115 214,117 214,119 L214,131 C214,133 212,135 210,135 L140,135 C138,135 136,133 136,131 L136,119 C136,117 138,115 140,115 Z" />
+</vector>

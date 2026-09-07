@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- TV Backgrounds -->
-    <color name="tv_bg_main">#0A0E17</color>
-    <color name="tv_bg_pane">#121824</color>
-    <color name="tv_bg_card">#1A2234</color>
-    <color name="tv_bg_card_selected">#243048</color>
-    <color name="tv_bg_overlay">#CC0A0E17</color>
-    <color name="tv_bg_dialog">#161E2E</color>
+    <!-- Cinematic Dark Theme Backgrounds -->
+    <color name="tv_bg_main">#070A13</color>
+    <color name="tv_bg_pane">#0D1322</color>
+    <color name="tv_bg_card">#151E33</color>
+    <color name="tv_bg_card_focused">#1E2C4B</color>
+    <color name="tv_bg_overlay">#E6070A13</color>
+    <color name="tv_bg_dialog">#11182B</color>
 
-    <!-- TV Accents & Focus -->
-    <color name="tv_accent">#00D2FF</color>
-    <color name="tv_accent_glow">#4D00D2FF</color>
-    <color name="tv_focus_stroke">#00E5FF</color>
-    <color name="tv_focus_bg">#2A3B5C</color>
-    <color name="tv_live_red">#FF3B30</color>
-    <color name="tv_gold_fav">#FFD700</color>
+    <!-- Neon Accents & Focus States -->
+    <color name="tv_accent">#00F2FE</color>
+    <color name="tv_accent_glow">#4D00F2FE</color>
+    <color name="tv_accent_secondary">#7F00FF</color>
+    <color name="tv_focus_stroke">#00F2FE</color>
+    <color name="tv_focus_bg">#25375E</color>
+    
+    <!-- Badges & Highlights -->
+    <color name="tv_live_red">#E50914</color>
+    <color name="tv_gold">#FFD700</color>
+    <color name="tv_badge_hd">#00C9FF</color>
 
-    <!-- Text Colors -->
+    <!-- Typography -->
     <color name="tv_text_primary">#FFFFFF</color>
     <color name="tv_text_secondary">#94A3B8</color>
     <color name="tv_text_muted">#64748B</color>
-    <color name="tv_text_focused">#FFFFFF</color>
+    <color name="tv_text_active">#00F2FE</color>
 </resources>

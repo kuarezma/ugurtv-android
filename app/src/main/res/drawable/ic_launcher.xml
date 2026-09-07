@@ -1,29 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <shape android:shape="rectangle">
-            <gradient
-                android:angle="135"
-                android:endColor="#0A0E17"
-                android:startColor="#1A2639" />
-            <corners android:radius="16dp" />
-        </shape>
-    </item>
-    <item android:gravity="center">
-        <vector
-            android:width="72dp"
-            android:height="72dp"
-            android:viewportWidth="100"
-            android:viewportHeight="100">
-            <path
-                android:fillColor="#00D2FF"
-                android:pathData="M20,25 L80,25 C84,25 86,27 86,31 L86,65 C86,69 84,71 80,71 L20,71 C16,71 14,69 14,65 L14,31 C14,27 16,25 20,25 Z" />
-            <path
-                android:fillColor="#0E1726"
-                android:pathData="M22,30 L78,30 C79,30 80,31 80,32 L80,64 C80,65 79,66 78,66 L22,66 C21,66 20,65 20,64 L20,32 C20,31 21,30 22,30 Z" />
-            <path
-                android:fillColor="#00E5FF"
-                android:pathData="M42,40 L64,48 L42,56 Z" />
-        </vector>
-    </item>
+    <item android:drawable="@drawable/ic_launcher_bg" />
+    <item android:drawable="@drawable/ic_launcher_fg" />
 </layer-list>

@@ -2,7 +2,15 @@
 <resources>
     <string name="app_name">Uğur TV</string>
     <string name="app_tagline">Vestel Android TV İçin Hızlı &amp; Akıcı IPTV</string>
+    <string name="brand_subtext">Vestel 65&quot; 4K Android TV 14 Optimize • Sıfır Gecikme • Hızlı Zapping</string>
     
+    <!-- Top Navigation Tabs -->
+    <string name="tab_live_tv">📺 CANLI TV</string>
+    <string name="tab_movies">🍿 FİLMLER</string>
+    <string name="tab_series">🎬 DİZİLER</string>
+    <string name="tab_favorites">⭐ FAVORİLER</string>
+    <string name="tab_settings">⚙️ AYARLAR</string>
+
     <!-- Login -->
     <string name="login_title">Xtream Codes Girişi</string>
     <string name="login_subtitle">Lütfen IPTV sağlayıcınızın bilgilerini girin</string>
@@ -16,16 +24,30 @@
     <string name="login_error_fields">Lütfen tüm alanları eksiksiz doldurun.</string>
     <string name="login_error_connection">Sunucuya bağlanılamadı. Bilgileri veya internet bağlantınızı kontrol edin.</string>
     
-    <!-- Main / Guide Screen -->
+    <!-- Live TV / Guide Screen -->
     <string name="cat_all">Tüm Kanallar</string>
     <string name="cat_favorites">Favorilerim</string>
     <string name="cat_history">Son İzlenenler</string>
     <string name="cat_settings">Ayarlar &amp; Hesap</string>
-    <string name="search_hint">Kanal Ara…</string>
+    <string name="search_hint">Kanal veya Film Ara…</string>
     <string name="no_channels_found">Bu kategoride kanal bulunamadı.</string>
     <string name="channel_count_format">%1$d Kanal</string>
     <string name="live_badge">CANLI</string>
-    <string name="press_ok_fullscreen">Tam Ekran İçin OK Tuşuna Basın</string>
+    <string name="press_ok_fullscreen">[OK] Tam Ekran</string>
+    <string name="connected_status">Bağlı • Aktif</string>
+    <string name="remote_shortcuts_title">Vestel Kumanda Kısayolları:</string>
+    <string name="remote_shortcuts_desc">• OK (Orta Tuş): Seçili kanalı tam ekran yap\n• Sağ Tuş (▶): Önizleme oynatıcısına geç\n• Sol Tuş (◀): Kategorilere dön\n• Sayı Tuşları (0-9): Doğrudan kanal numarasıyla geç</string>
+
+    <!-- Netflix Movies & Series Section -->
+    <string name="play_now">▶ HEMEN İZLE</string>
+    <string name="add_to_fav">⭐ FAVORİ</string>
+    <string name="featured_movie">ÖNE ÇIKAN FİLM</string>
+    <string name="featured_series">ÖNE ÇIKAN DİZİ</string>
+    <string name="movie_count_format">%1$d Film</string>
+    <string name="series_count_format">%1$d Dizi</string>
+    <string name="no_movies_found">Bu kategoride film bulunamadı.</string>
+    <string name="no_series_found">Bu kategoride dizi bulunamadı.</string>
+    <string name="badge_4k">4K ULTRA HD</string>
     
     <!-- Player & OSD -->
     <string name="aspect_ratio">Görüntü Oranı</string>
@@ -39,13 +61,15 @@
     <string name="fav_added">Favorilere eklendi</string>
     <string name="fav_removed">Favorilerden çıkarıldı</string>
     <string name="channel_zap_hint">Kanal Değiştir: ▲ / ▼ | Kanal Listesi: ◀ | Bilgi: OK</string>
+    <string name="quick_channel_title">Hızlı Kanal Listesi</string>
     
     <!-- Settings Dialog -->
     <string name="account_info">Hesap Bilgileri</string>
-    <string name="status_active">Aktif</string>
+    <string name="status_active">Aktif (Vestel TV 65&quot;)</string>
     <string name="status_expired">Süresi Dolmuş</string>
-    <string name="expires_at">Bitiş Tarihi: %1$s</string>
-    <string name="server_url_label">Sunucu: %1$s</string>
+    <string name="expires_at">Bitiş Tarihi: Süresiz</string>
+    <string name="server_url_format">Sunucu: %1$s</string>
+    <string name="username_format">Kullanıcı: %1$s</string>
     <string name="btn_logout">HESAPTAN ÇIKIŞ YAP</string>
     <string name="btn_close">KAPAT</string>
 </resources>

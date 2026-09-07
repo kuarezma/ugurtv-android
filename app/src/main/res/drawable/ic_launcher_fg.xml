@@ -1,0 +1,24 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Centered TV Icon -->
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M24,30 L84,30 C87,30 89,32 89,35 L89,67 C89,70 87,72 84,72 L24,72 C21,72 19,70 19,67 L19,35 C19,32 21,30 24,30 Z" />
+    <path
+        android:fillColor="#090E1A"
+        android:pathData="M26,33 L82,33 C83.5,33 85,34.5 85,36 L85,64 C85,65.5 83.5,67 82,67 L26,67 C24.5,67 23,65.5 23,64 L23,36 C23,34.5 24.5,33 26,33 Z" />
+    <!-- Glowing Play symbol -->
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M48,42 L67,50 L48,58 Z" />
+    <!-- Stand -->
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M48,72 L60,72 L64,79 L44,79 Z" />
+    <path
+        android:fillColor="#7F00FF"
+        android:pathData="M38,79 L70,79 L70,82 L38,82 Z" />
+</vector>

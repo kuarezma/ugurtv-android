@@ -1,35 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <shape android:shape="rectangle">
-            <gradient
-                android:angle="45"
-                android:endColor="#0B132B"
-                android:startColor="#1C2541" />
-            <corners android:radius="8dp" />
-        </shape>
-    </item>
-    <item android:gravity="center">
-        <vector
-            android:width="120dp"
-            android:height="120dp"
-            android:viewportWidth="100"
-            android:viewportHeight="100">
-            <!-- TV Screen Frame -->
-            <path
-                android:fillColor="#00D2FF"
-                android:pathData="M15,20 L85,20 C88,20 90,22 90,25 L90,65 C90,68 88,70 85,70 L15,70 C12,70 10,68 10,65 L10,25 C10,22 12,20 15,20 Z" />
-            <path
-                android:fillColor="#0A0E17"
-                android:pathData="M17,25 L83,25 C84,25 85,26 85,27 L85,63 C85,64 84,65 83,65 L17,65 C16,65 15,64 15,63 L15,27 C15,26 16,25 17,25 Z" />
-            <!-- Play Symbol -->
-            <path
-                android:fillColor="#00E5FF"
-                android:pathData="M43,35 L65,45 L43,55 Z" />
-            <!-- Stand -->
-            <path
-                android:fillColor="#00D2FF"
-                android:pathData="M42,70 L58,70 L62,77 L38,77 Z" />
-        </vector>
-    </item>
+    <item android:drawable="@drawable/tv_banner_bg" />
+    <item android:drawable="@drawable/tv_banner_fg" />
 </layer-list>
