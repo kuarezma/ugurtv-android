@@ -43,19 +43,20 @@ class CategoryAdapter(
             itemView.isSelected = isSelected
 
             itemView.setOnClickListener {
-                val oldPos = selectedPosition
-                selectedPosition = bindingAdapterPosition
-                notifyItemChanged(oldPos)
-                notifyItemChanged(selectedPosition)
+                val pos = bindingAdapterPosition
+                if (pos != RecyclerView.NO_POSITION) {
+                    selectedPosition = pos
+                }
                 onCategorySelected(category)
             }
 
-            itemView.setOnFocusChangeListener { _, hasFocus ->
+            itemView.setOnFocusChangeListener { view, hasFocus ->
+                view.isSelected = hasFocus
                 if (hasFocus) {
-                    val oldPos = selectedPosition
-                    selectedPosition = bindingAdapterPosition
-                    notifyItemChanged(oldPos)
-                    notifyItemChanged(selectedPosition)
+                    val pos = bindingAdapterPosition
+                    if (pos != RecyclerView.NO_POSITION) {
+                        selectedPosition = pos
+                    }
                     onCategorySelected(category)
                 }
             }

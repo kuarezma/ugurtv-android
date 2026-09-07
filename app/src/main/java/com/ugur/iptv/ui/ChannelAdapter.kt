@@ -66,12 +66,13 @@ class ChannelAdapter(
                 onChannelClicked(channel)
             }
 
-            itemView.setOnFocusChangeListener { _, hasFocus ->
+            itemView.setOnFocusChangeListener { view, hasFocus ->
+                view.isSelected = hasFocus
                 if (hasFocus) {
-                    val oldIndex = selectedIndex
-                    selectedIndex = bindingAdapterPosition
-                    notifyItemChanged(oldIndex)
-                    notifyItemChanged(selectedIndex)
+                    val pos = bindingAdapterPosition
+                    if (pos != RecyclerView.NO_POSITION) {
+                        selectedIndex = pos
+                    }
                     onChannelFocused(channel)
                 }
             }

@@ -283,6 +283,14 @@ class MainActivity : AppCompatActivity() {
             if (handleBackNavigation()) return true
         }
 
+        if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+            if (handleDpadLeft()) return true
+        }
+
+        if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+            if (handleDpadRight()) return true
+        }
+
         // Numeric direct channel tuning on TV remote (0-9)
         if (currentSection == NavSection.LIVE_TV || currentSection == NavSection.FAVORITES) {
             when (keyCode) {
@@ -300,6 +308,125 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.onKeyDown(keyCode, event)
+    }
+
+    private fun handleDpadRight(): Boolean {
+        val focused = currentFocus
+
+        // 1. From Left Navigation Rail -> move to active section content
+        if (isNavRailFocused()) {
+            when (currentSection) {
+                NavSection.LIVE_TV, NavSection.FAVORITES -> {
+                    val child = binding.rvCategories.layoutManager?.findViewByPosition(0)
+                    child?.requestFocus() ?: binding.rvCategories.requestFocus()
+                    return true
+                }
+                NavSection.MOVIES -> {
+                    binding.btnHeroPlayMovie.requestFocus()
+                    return true
+                }
+                NavSection.SERIES -> {
+                    binding.btnHeroPlaySeries.requestFocus()
+                    return true
+                }
+            }
+        }
+
+        // 2. From Categories -> move to Channels list
+        if (binding.rvCategories.hasFocus()) {
+            val child = binding.rvChannels.layoutManager?.findViewByPosition(0)
+            child?.requestFocus() ?: binding.rvChannels.requestFocus()
+            return true
+        }
+
+        // 3. From Channels list -> move to Preview Player Card
+        if (binding.rvChannels.hasFocus()) {
+            binding.btnExpandFullscreen.requestFocus()
+            return true
+        }
+
+        // 4. From Preview Player Card -> rightmost edge, stay here
+        if (focused?.id == R.id.btnExpandFullscreen || focused?.id == R.id.ivPreviewFavorite) {
+            return true
+        }
+
+        return false
+    }
+
+    private fun handleDpadLeft(): Boolean {
+        val focused = currentFocus
+
+        // 1. If inside Right Preview Pane -> move back to Channels
+        if (focused?.id == R.id.btnExpandFullscreen || focused?.id == R.id.ivPreviewFavorite) {
+            val child = binding.rvChannels.layoutManager?.findViewByPosition(0)
+            child?.requestFocus() ?: binding.rvChannels.requestFocus()
+            return true
+        }
+
+        // 2. If inside Channels -> move back to Categories
+        if (binding.rvChannels.hasFocus()) {
+            val child = binding.rvCategories.layoutManager?.findViewByPosition(0)
+            child?.requestFocus() ?: binding.rvCategories.requestFocus()
+            return true
+        }
+
+        // 3. If inside Categories -> move back to Left Navigation Rail
+        if (binding.rvCategories.hasFocus()) {
+            getFocusedNavButton().requestFocus()
+            return true
+        }
+
+        // 4. If inside Movies Section -> move back to Nav Rail
+        if (binding.sectionMovies.visibility == View.VISIBLE) {
+            if (binding.btnHeroPlayMovie.hasFocus()) {
+                binding.btnNavMovies.requestFocus()
+                return true
+            }
+            val pos = focused?.let { binding.rvMovies.getChildAdapterPosition(it) } ?: -1
+            if (pos == -1 || pos % 5 == 0) {
+                binding.btnNavMovies.requestFocus()
+                return true
+            }
+        }
+
+        // 5. If inside Series Section -> move back to Nav Rail
+        if (binding.sectionSeries.visibility == View.VISIBLE) {
+            if (binding.btnHeroPlaySeries.hasFocus()) {
+                binding.btnNavSeries.requestFocus()
+                return true
+            }
+            val pos = focused?.let { binding.rvSeries.getChildAdapterPosition(it) } ?: -1
+            if (pos == -1 || pos % 5 == 0) {
+                binding.btnNavSeries.requestFocus()
+                return true
+            }
+        }
+
+        // 6. If on Left Navigation Rail -> leftmost boundary, consume so it never exits the app
+        if (isNavRailFocused()) {
+            return true
+        }
+
+        return false
+    }
+
+    private fun isNavRailFocused(): Boolean {
+        val f = currentFocus ?: return false
+        return f.id == R.id.btnNavLiveTv ||
+                f.id == R.id.btnNavMovies ||
+                f.id == R.id.btnNavSeries ||
+                f.id == R.id.btnNavFavorites ||
+                f.id == R.id.btnNavSearch ||
+                f.id == R.id.btnNavSettings
+    }
+
+    private fun getFocusedNavButton(): View {
+        return when (currentSection) {
+            NavSection.LIVE_TV -> binding.btnNavLiveTv
+            NavSection.MOVIES -> binding.btnNavMovies
+            NavSection.SERIES -> binding.btnNavSeries
+            NavSection.FAVORITES -> binding.btnNavFavorites
+        }
     }
 
     private fun handleBackNavigation(): Boolean {
