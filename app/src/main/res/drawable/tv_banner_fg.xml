@@ -3,24 +3,146 @@
     android:height="180dp"
     android:viewportWidth="320"
     android:viewportHeight="180">
-    <!-- TV Emblem on Left -->
+
+    <!-- ============================================================== -->
+    <!-- 1. LEFT SIDE: 3D TV LOGO EMBLEM                                -->
+    <!-- ============================================================== -->
+    <!-- Ambient Cyan Aura -->
+    <path
+        android:fillColor="#1500F2FE"
+        android:pathData="M38,36 L122,36 C128,36 132,40 132,46 L132,96 C132,102 128,106 122,106 L38,106 C32,106 28,102 28,96 L28,46 C28,40 32,36 38,36 Z" />
+
+    <!-- TV Frame Shadow -->
+    <path
+        android:fillColor="#50000000"
+        android:pathData="M42,42 L118,42 C124,42 127,45 127,50 L127,98 C127,103 124,106 118,106 L42,106 C36,106 33,103 33,98 L33,50 C33,45 36,42 42,42 Z" />
+
+    <!-- Titanium Chassis Outer Frame -->
+    <path
+        android:fillColor="#162035"
+        android:pathData="M40,38 L120,38 C125,38 129,42 129,47 L129,97 C129,102 125,106 120,106 L40,106 C35,106 31,102 31,97 L31,47 C31,42 35,38 40,38 Z" />
+
+    <!-- Top Metallic Specular Highlight -->
+    <path
+        android:fillColor="#5874A6"
+        android:pathData="M40,38 L120,38 C125,38 129,42 129,47 L129,48.5 C129,43.5 125,39.5 120,39.5 L40,39.5 C35,39.5 31,43.5 31,48.5 L31,47 C31,42 35,38 40,38 Z" />
+
+    <!-- Neon Cyan & Violet Dual Border -->
     <path
         android:fillColor="#00F2FE"
-        android:pathData="M45,45 L115,45 C118,45 120,47 120,50 L120,95 C120,98 118,100 115,100 L45,100 C42,100 40,98 40,95 L40,50 C40,47 42,45 45,45 Z" />
-    <path
-        android:fillColor="#080C16"
-        android:pathData="M48,48 L112,48 C113.5,48 115,49.5 115,51 L115,92 C115,93.5 113.5,95 112,95 L48,95 C46.5,95 45,93.5 45,92 L45,51 C45,49.5 46.5,48 48,48 Z" />
-    <path
-        android:fillColor="#00F2FE"
-        android:pathData="M72,60 L92,71 L72,82 Z" />
-    <path
-        android:fillColor="#00F2FE"
-        android:pathData="M70,100 L90,100 L94,110 L66,110 Z" />
+        android:pathData="M40,39.5 L120,39.5 C123.6,39.5 126.5,42.4 126.5,46 L126.5,72 L125,72 L125,46 C125,43.2 122.8,41 120,41 L40,41 C37.2,41 35,43.2 35,46 L35,72 L33.5,72 L33.5,46 C33.5,42.4 36.4,39.5 40,39.5 Z" />
     <path
         android:fillColor="#7F00FF"
-        android:pathData="M56,110 L104,110 L104,113 L56,113 Z" />
-    <!-- 4K Ultra HD Badge -->
+        android:pathData="M126.5,72 L126.5,97 C126.5,100.6 123.6,103.5 120,103.5 L40,103.5 C36.4,103.5 33.5,100.6 33.5,97 L33.5,72 L35,72 L35,97 C35,99.8 37.2,102 40,102 L120,102 C122.8,102 125,99.8 125,97 L125,72 Z" />
+
+    <!-- Piano Black OLED Screen -->
+    <path
+        android:fillColor="#070A13"
+        android:pathData="M39,41 L121,41 C124,41 126,43 126,46 L126,98 C126,101 124,103 121,103 L39,103 C36,103 34,101 34,98 L34,46 C34,43 36,41 39,41 Z" />
+
+    <!-- Glass Specular Reflection -->
+    <path
+        android:fillColor="#15FFFFFF"
+        android:pathData="M35,50 L64,41 L50,103 L34,103 L34,75 Z" />
+
+    <!-- Stylized U-Ribbon -->
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M48,50 L56,50 C57,50 58,51 58,52 L58,74 C58,80 62,84 68,84 L68,90 C58,90 49,83 49,74 L49,52 C49,51 50,50 51,50 Z" />
+    <path
+        android:fillColor="#0072FF"
+        android:pathData="M64,84 L96,84 L96,90 L64,90 Z" />
+    <path
+        android:fillColor="#8A2BE2"
+        android:pathData="M112,50 L104,50 C103,50 102,51 102,52 L102,74 C102,80 98,84 92,84 L92,90 C102,90 111,83 111,74 L111,52 C111,51 110,50 109,50 Z" />
+
+    <!-- 3D Luminous Play Symbol (▶) -->
+    <path
+        android:fillColor="#80000000"
+        android:pathData="M73,58 L96,71 L73,84 Z" />
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M71,55 L96.5,69.5 L71,83.5 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M72,57 L95,70 L72,83 Z" />
+    <path
+        android:fillColor="#E0F7FF"
+        android:pathData="M72,57 L95,70 L72,70 Z" />
+
+    <!-- Pedestal Stand -->
+    <path
+        android:fillColor="#1E2B45"
+        android:pathData="M75,106 L85,106 L87,114 L73,114 Z" />
+    <path
+        android:fillColor="#223352"
+        android:pathData="M56,114 L104,114 C106,114 107,115 107,116.5 L107,118 C107,119.5 106,120 104,120 L56,120 C54,120 53,119.5 53,118 L53,116.5 C53,115 54,114 56,114 Z" />
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M60,118.5 L100,118.5 L100,120 L60,120 Z" />
+
+    <!-- ============================================================== -->
+    <!-- 2. RIGHT SIDE: BRAND TYPOGRAPHY & BADGES                       -->
+    <!-- ============================================================== -->
+    <!-- "UĞUR TV" Logo Type -->
+    <!-- U -->
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M150,55 L158,55 L158,82 C158,87 161,90 166,90 C171,90 174,87 174,82 L174,55 L182,55 L182,82 C182,92 175,98 166,98 C157,98 150,92 150,82 Z" />
+    <!-- Ğ -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M190,76 C190,63 198,54 211,54 C220,54 226,59 229,66 L222,70 C220,65 216,62 211,62 C204,62 199,68 199,76 C199,84 204,90 211,90 C217,90 221,87 222,82 L211,82 L211,75 L230,75 L230,86 C226,93 219,98 211,98 C198,98 190,89 190,76 Z" />
+    <!-- Ğ Breve Accent -->
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M204,47 C207,49 213,49 216,47 L218,51 C213,54 207,54 202,51 Z" />
+    <!-- U -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M238,55 L246,55 L246,82 C246,87 249,90 254,90 C259,90 262,87 262,82 L262,55 L270,55 L270,82 C270,92 263,98 254,98 C245,98 238,92 238,82 Z" />
+    <!-- R -->
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M278,55 L296,55 C303,55 307,59 307,66 C307,71 303,75 298,76 L308,98 L299,98 L290,78 L286,78 L286,98 L278,98 Z M286,63 L286,71 L295,71 C298,71 300,69 300,67 C300,65 298,63 295,63 Z" />
+
+    <!-- "TV" Neon Capsule Badge -->
+    <path
+        android:fillColor="#7F00FF"
+        android:pathData="M272,32 L308,32 C311,32 313,34 313,37 L313,47 C313,50 311,52 308,52 L272,52 C269,52 267,50 267,47 L267,37 C267,34 269,32 272,32 Z" />
+    <!-- T in TV -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M274,36 L288,36 L288,40 L283,40 L283,48 L279,48 L279,40 L274,40 Z" />
+    <!-- V in TV -->
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M291,36 L296,36 L301,45 L306,36 L311,36 L304,48 L298,48 Z" />
+
+    <!-- Subtitle: "IPTV • CANLI & SİNEMA" -->
+    <path
+        android:fillColor="#A0AEC0"
+        android:pathData="M150,110 L280,110 L280,111 L150,111 Z" />
+
+    <!-- 4K HDR Badge -->
     <path
         android:fillColor="#FFD700"
-        android:pathData="M140,115 L210,115 C212,115 214,117 214,119 L214,131 C214,133 212,135 210,135 L140,135 C138,135 136,133 136,131 L136,119 C136,117 138,115 140,115 Z" />
+        android:pathData="M150,118 L210,118 C212,118 213,119 213,121 L213,133 C213,135 212,136 210,136 L150,136 C148,136 147,135 147,133 L147,121 C147,119 148,118 150,118 Z" />
+    <!-- 4K Text -->
+    <path
+        android:fillColor="#070A13"
+        android:pathData="M154,122 L157,122 L157,127 L160,127 L160,122 L163,122 L163,132 L160,132 L160,129 L154,129 Z" />
+    <path
+        android:fillColor="#070A13"
+        android:pathData="M165,122 L168,122 L168,126 L172,122 L176,122 L171,127 L176,132 L172,132 L168,128 L168,132 L165,132 Z" />
+
+    <!-- ULTRA HD Pill -->
+    <path
+        android:fillColor="#15264B"
+        android:pathData="M218,118 L292,118 C294,118 295,119 295,121 L295,133 C295,135 294,136 292,136 L218,136 C216,136 215,135 215,133 L215,121 C215,119 216,118 218,118 Z" />
+    <!-- ULTRA HD Inner Border -->
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M218,119 L292,119 C293.5,119 294,119.5 294,121 L294,133 C294,134.5 293.5,135 292,135 L218,135 C216.5,135 216,134.5 216,133 L216,121 C216,119.5 216.5,119 218,119 Z M218,120 L218,134 L292,134 L292,120 Z" />
+
 </vector>

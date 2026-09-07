@@ -3,34 +3,93 @@
     android:height="128dp"
     android:viewportWidth="100"
     android:viewportHeight="100">
-    <!-- Outer Glow Circle -->
+
+    <!-- Ambient Cyan Halo -->
     <path
-        android:fillColor="#1A00F2FE"
-        android:pathData="M50,4 C75.4,4 96,24.6 96,50 C96,75.4 75.4,96 50,96 C24.6,96 4,75.4 4,50 C4,24.6 24.6,4 50,4 Z" />
-    <!-- TV Outer Metallic Frame -->
+        android:fillColor="#1500F2FE"
+        android:pathData="M16,14 L84,14 C90,14 94,18 94,24 L94,66 C94,72 90,76 84,76 L16,76 C10,76 6,72 6,66 L6,24 C6,18 10,14 16,14 Z" />
+
+    <!-- TV Frame Drop Shadow -->
+    <path
+        android:fillColor="#60000000"
+        android:pathData="M18,20 L82,20 C87,20 90,23 90,28 L90,68 C90,73 87,76 82,76 L18,76 C13,76 10,73 10,68 L10,28 C10,23 13,20 18,20 Z" />
+
+    <!-- Titanium Chassis Outer Frame -->
     <path
         android:fillColor="#162035"
-        android:pathData="M12,22 L88,22 C91.3,22 94,24.7 94,28 L94,68 C94,71.3 91.3,74 88,74 L12,74 C8.7,74 6,71.3 6,68 L6,28 C6,24.7 8.7,22 12,22 Z" />
-    <!-- TV Bezel Neon Border -->
+        android:pathData="M16,16 L84,16 C88.5,16 92,19.5 92,24 L92,66 C92,70.5 88.5,74 84,74 L16,74 C11.5,74 8,70.5 8,66 L8,24 C8,19.5 11.5,16 16,16 Z" />
+
+    <!-- Top Metallic Specular Highlight -->
+    <path
+        android:fillColor="#5874A6"
+        android:pathData="M16,16 L84,16 C88.5,16 92,19.5 92,24 L92,25.5 C92,21 88.5,17.5 84,17.5 L16,17.5 C11.5,17.5 8,21 8,25.5 L8,24 C8,19.5 11.5,16 16,16 Z" />
+
+    <!-- Neon Cyan & Violet Dual Border -->
     <path
         android:fillColor="#00F2FE"
-        android:pathData="M14,24 L86,24 C88.2,24 90,25.8 90,28 L90,66 C90,68.2 88.2,70 86,70 L14,70 C11.8,70 10,68.2 10,66 L10,28 C10,25.8 11.8,24 14,24 Z" />
-    <!-- TV Screen Glass -->
-    <path
-        android:fillColor="#060913"
-        android:pathData="M15,26 L85,26 C86.1,26 87,26.9 87,28 L87,64 C87,65.1 86.1,66 85,66 L15,66 C13.9,66 13,65.1 13,64 L13,28 C13,26.9 13.9,26 15,26 Z" />
-    <!-- Play Triangle Button Gradient Accent -->
-    <path
-        android:fillColor="#00F2FE"
-        android:pathData="M42,36 L66,46 L42,56 Z" />
+        android:pathData="M16,17.5 L84,17.5 C87.6,17.5 90.5,20.4 90.5,24 L90.5,45 L89,45 L89,24 C89,21.2 86.8,19 84,19 L16,19 C13.2,19 11,21.2 11,24 L11,45 L9.5,45 L9.5,24 C9.5,20.4 12.4,17.5 16,17.5 Z" />
     <path
         android:fillColor="#7F00FF"
-        android:pathData="M42,46 L66,46 L42,56 Z" />
-    <!-- TV Stand Base -->
+        android:pathData="M90.5,45 L90.5,66 C90.5,69.6 87.6,72.5 84,72.5 L16,72.5 C12.4,72.5 9.5,69.6 9.5,66 L9.5,45 L11,45 L11,66 C11,68.8 13.2,71 16,71 L84,71 C86.8,71 89,68.8 89,66 L89,45 Z" />
+
+    <!-- Piano Black OLED Glass Screen -->
+    <path
+        android:fillColor="#070A13"
+        android:pathData="M15,19 L85,19 C87.8,19 90,21.2 90,24 L90,66 C90,68.8 87.8,71 85,71 L15,71 C12.2,71 10,68.8 10,66 L10,24 C10,21.2 12.2,19 15,19 Z" />
+
+    <!-- Glass Specular Diagonal Reflection -->
+    <path
+        android:fillColor="#15FFFFFF"
+        android:pathData="M12,28 L38,19 L26,71 L10,71 L10,48 Z" />
+    <path
+        android:fillColor="#0DFFFFFF"
+        android:pathData="M43,19 L50,19 L36,71 L29,71 Z" />
+
+    <!-- Stylized 'U' Brand Ribbon -->
     <path
         android:fillColor="#00F2FE"
-        android:pathData="M44,74 L56,74 L60,82 L40,82 Z" />
+        android:pathData="M24,28 L32,28 C33,28 34,29 34,30 L34,48 C34,53 37,56 42,56 L42,62 C34,62 26,57 26,48 L26,30 C26,29 27,28 28,28 Z" />
     <path
-        android:fillColor="#7F00FF"
-        android:pathData="M32,82 L68,82 L68,85 L32,85 Z" />
+        android:fillColor="#0072FF"
+        android:pathData="M38,56 L62,56 L62,62 L38,62 Z" />
+    <path
+        android:fillColor="#8A2BE2"
+        android:pathData="M76,28 L68,28 C67,28 66,29 66,30 L66,48 C66,53 63,56 58,56 L58,62 C66,62 74,57 74,48 L74,30 C74,29 73,28 72,28 Z" />
+
+    <!-- 3D Luminous Play Symbol (▶) -->
+    <path
+        android:fillColor="#80000000"
+        android:pathData="M46,34 L65,45 L46,56 Z" />
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M44,31.5 L65.5,43.5 L44,55.5 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M45,33 L64,44 L45,55 Z" />
+    <path
+        android:fillColor="#E0F7FF"
+        android:pathData="M45,33 L64,44 L45,44 Z" />
+
+    <!-- 4K Gold Badge -->
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M74,22 L86,22 C87,22 87.5,22.5 87.5,23.5 L87.5,28.5 C87.5,29.5 87,30 86,30 L74,30 C73,30 72.5,29.5 72.5,28.5 L72.5,23.5 C72.5,22.5 73,22 74,22 Z" />
+    <path
+        android:fillColor="#070A13"
+        android:pathData="M75,24 L77,24 L77,26 L78.5,26 L78.5,24 L79.8,24 L79.8,28 L78.5,28 L78.5,27 L75,27 Z" />
+    <path
+        android:fillColor="#070A13"
+        android:pathData="M81,24 L82.5,24 L82.5,25.8 L84.2,24 L85.8,24 L83.6,26.1 L85.9,28 L84.3,28 L82.5,26.5 L82.5,28 L81,28 Z" />
+
+    <!-- Pedestal & Stand -->
+    <path
+        android:fillColor="#1E2B45"
+        android:pathData="M45,74 L55,74 L57,80 L43,80 Z" />
+    <path
+        android:fillColor="#223352"
+        android:pathData="M28,80 L72,80 C74,80 75,81 75,82.5 L75,84 C75,85.5 74,86 72,86 L28,86 C26,86 25,85.5 25,84 L25,82.5 C25,81 26,80 28,80 Z" />
+    <path
+        android:fillColor="#00F2FE"
+        android:pathData="M32,84.5 L68,84.5 L68,86 L32,86 Z" />
+
 </vector>
