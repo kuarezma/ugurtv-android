@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="520dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_channel_item"
+    android:orientation="vertical"
+    android:padding="28dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kanal veya Film Ara"
+        android:textColor="@color/tv_accent"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etSearchDialogInput"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_channel_item"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="12dp"
+        android:focusable="true"
+        android:hint="Aramak istediğiniz adı yazın…"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:singleLine="true"
+        android:textColor="#FFFFFF"
+        android:textColorHint="@color/tv_text_muted"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnSearchApply"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button"
+            android:focusable="true"
+            android:text="ARA / FİLTRELE"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnSearchClear"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_channel_item"
+            android:focusable="true"
+            android:text="TEMİZLE &amp; ÇIK"
+            android:textColor="@color/tv_text_secondary"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</LinearLayout>

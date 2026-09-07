@@ -3,13 +3,17 @@ package com.ugur.iptv.ui
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.os.Handler
+import android.os.Looper
+import android.view.KeyEvent
 import android.view.View
 import android.view.Window
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -32,9 +36,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity() {
     private val allMovies = mutableListOf<MovieItem>()
     private val allSeries = mutableListOf<SeriesItem>()
 
+    private var currentSection: NavSection = NavSection.LIVE_TV
     private var activeCategory: LiveCategory? = null
     private var currentlyPlayingChannel: ChannelItem? = null
     private var currentHeroMovie: MovieItem? = null
@@ -61,6 +63,14 @@ class MainActivity : AppCompatActivity() {
     private var isDemoMode: Boolean = false
 
     private var previewPlayJob: Job? = null
+    private var currentSearchQuery: String = ""
+    private var lastBackPressTime = 0L
+
+    private val directDialHandler = Handler(Looper.getMainLooper())
+    private val digitBuffer = StringBuilder()
+    private val directDialRunnable = Runnable { executeDirectDial() }
+
+    enum class NavSection { LIVE_TV, MOVIES, SERIES, FAVORITES }
 
     companion object {
         var channelRepository: List<ChannelItem> = emptyList()
@@ -75,17 +85,12 @@ class MainActivity : AppCompatActivity() {
         isDemoMode = intent.getBooleanExtra("EXTRA_IS_DEMO", false)
 
         initPlayer()
-        setupTopNavigation()
+        setupNavRail()
         setupRecyclerViews()
         setupListeners()
-        updateHeaderClock()
+        setupBackHandling()
 
         loadData()
-    }
-
-    private fun updateHeaderClock() {
-        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
-        binding.tvHeaderClock.text = sdf.format(Date())
     }
 
     private fun initPlayer() {
@@ -101,31 +106,58 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupTopNavigation() {
-        binding.tabLiveTv.setOnClickListener { switchTab(TabMode.LIVE_TV) }
-        binding.tabMovies.setOnClickListener { switchTab(TabMode.MOVIES) }
-        binding.tabSeries.setOnClickListener { switchTab(TabMode.SERIES) }
-        binding.tabFavorites.setOnClickListener { switchTab(TabMode.FAVORITES) }
-        binding.tabSettings.setOnClickListener { showSettingsDialog() }
+    private fun setupNavRail() {
+        binding.btnNavLiveTv.setOnClickListener { switchNav(NavSection.LIVE_TV) }
+        binding.btnNavMovies.setOnClickListener { switchNav(NavSection.MOVIES) }
+        binding.btnNavSeries.setOnClickListener { switchNav(NavSection.SERIES) }
+        binding.btnNavFavorites.setOnClickListener { switchNav(NavSection.FAVORITES) }
+        binding.btnNavSearch.setOnClickListener { showSearchDialog() }
+        binding.btnNavSettings.setOnClickListener { showSettingsDialog() }
+
+        // Focus listeners for visual highlight on TV remote movement
+        val navButtons = listOf(
+            binding.btnNavLiveTv to NavSection.LIVE_TV,
+            binding.btnNavMovies to NavSection.MOVIES,
+            binding.btnNavSeries to NavSection.SERIES,
+            binding.btnNavFavorites to NavSection.FAVORITES
+        )
+
+        navButtons.forEach { (view, section) ->
+            view.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    updateNavSelection(section)
+                } else {
+                    updateNavSelection(currentSection)
+                }
+            }
+        }
+
+        updateNavSelection(NavSection.LIVE_TV)
     }
 
-    enum class TabMode { LIVE_TV, MOVIES, SERIES, FAVORITES }
+    private fun updateNavSelection(section: NavSection) {
+        binding.btnNavLiveTv.isSelected = (section == NavSection.LIVE_TV)
+        binding.btnNavMovies.isSelected = (section == NavSection.MOVIES)
+        binding.btnNavSeries.isSelected = (section == NavSection.SERIES)
+        binding.btnNavFavorites.isSelected = (section == NavSection.FAVORITES)
+    }
 
-    private fun switchTab(tab: TabMode) {
-        binding.tabLiveTv.isSelected = (tab == TabMode.LIVE_TV)
-        binding.tabMovies.isSelected = (tab == TabMode.MOVIES)
-        binding.tabSeries.isSelected = (tab == TabMode.SERIES)
-        binding.tabFavorites.isSelected = (tab == TabMode.FAVORITES)
+    private fun switchNav(section: NavSection) {
+        currentSection = section
+        updateNavSelection(section)
 
-        when (tab) {
-            TabMode.LIVE_TV -> {
+        when (section) {
+            NavSection.LIVE_TV -> {
                 binding.sectionLiveTv.visibility = View.VISIBLE
                 binding.sectionMovies.visibility = View.GONE
                 binding.sectionSeries.visibility = View.GONE
-                allCategories.firstOrNull { it.categoryId == "all" }?.let { selectCategory(it) }
+                val defaultCat = allCategories.firstOrNull { it.categoryId == "all" }
+                    ?: allCategories.firstOrNull()
+                defaultCat?.let { selectCategory(it) }
             }
-            TabMode.MOVIES -> {
+            NavSection.MOVIES -> {
                 playerManager.pause()
+                previewPlayJob?.cancel()
                 binding.sectionLiveTv.visibility = View.GONE
                 binding.sectionMovies.visibility = View.VISIBLE
                 binding.sectionSeries.visibility = View.GONE
@@ -134,8 +166,9 @@ class MainActivity : AppCompatActivity() {
                     setHeroMovie(allMovies[0])
                 }
             }
-            TabMode.SERIES -> {
+            NavSection.SERIES -> {
                 playerManager.pause()
+                previewPlayJob?.cancel()
                 binding.sectionLiveTv.visibility = View.GONE
                 binding.sectionMovies.visibility = View.GONE
                 binding.sectionSeries.visibility = View.VISIBLE
@@ -144,7 +177,7 @@ class MainActivity : AppCompatActivity() {
                     setHeroSeries(allSeries[0])
                 }
             }
-            TabMode.FAVORITES -> {
+            NavSection.FAVORITES -> {
                 binding.sectionLiveTv.visibility = View.VISIBLE
                 binding.sectionMovies.visibility = View.GONE
                 binding.sectionSeries.visibility = View.GONE
@@ -235,14 +268,233 @@ class MainActivity : AppCompatActivity() {
         binding.btnHeroPlaySeries.setOnClickListener {
             currentHeroSeries?.let { playSeries(it) }
         }
+    }
 
-        binding.etSearch.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                filterChannels(s?.toString().orEmpty())
+    private fun setupBackHandling() {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                handleBackNavigation()
             }
-            override fun afterTextChanged(s: Editable?) {}
         })
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (handleBackNavigation()) return true
+        }
+
+        // Numeric direct channel tuning on TV remote (0-9)
+        if (currentSection == NavSection.LIVE_TV || currentSection == NavSection.FAVORITES) {
+            when (keyCode) {
+                KeyEvent.KEYCODE_0 -> { handleDigitInput(0); return true }
+                KeyEvent.KEYCODE_1 -> { handleDigitInput(1); return true }
+                KeyEvent.KEYCODE_2 -> { handleDigitInput(2); return true }
+                KeyEvent.KEYCODE_3 -> { handleDigitInput(3); return true }
+                KeyEvent.KEYCODE_4 -> { handleDigitInput(4); return true }
+                KeyEvent.KEYCODE_5 -> { handleDigitInput(5); return true }
+                KeyEvent.KEYCODE_6 -> { handleDigitInput(6); return true }
+                KeyEvent.KEYCODE_7 -> { handleDigitInput(7); return true }
+                KeyEvent.KEYCODE_8 -> { handleDigitInput(8); return true }
+                KeyEvent.KEYCODE_9 -> { handleDigitInput(9); return true }
+            }
+        }
+
+        return super.onKeyDown(keyCode, event)
+    }
+
+    private fun handleBackNavigation(): Boolean {
+        val focusedView = currentFocus
+
+        // Level 3: Right Preview Pane -> move focus to Channel List
+        if (focusedView?.id == R.id.btnExpandFullscreen || focusedView?.id == R.id.ivPreviewFavorite) {
+            binding.rvChannels.requestFocus()
+            return true
+        }
+
+        // Level 2: Channel List -> move focus to Categories List
+        if (binding.rvChannels.hasFocus()) {
+            binding.rvCategories.requestFocus()
+            return true
+        }
+
+        // Level 1: Categories List -> move focus to Left Navigation Rail
+        if (binding.rvCategories.hasFocus()) {
+            binding.btnNavLiveTv.requestFocus()
+            return true
+        }
+
+        // Movies Section: Grid or Hero -> move focus to Left Navigation Rail
+        if (binding.sectionMovies.visibility == View.VISIBLE &&
+            (binding.rvMovies.hasFocus() || binding.btnHeroPlayMovie.hasFocus())
+        ) {
+            binding.btnNavMovies.requestFocus()
+            return true
+        }
+
+        // Series Section: Grid or Hero -> move focus to Left Navigation Rail
+        if (binding.sectionSeries.visibility == View.VISIBLE &&
+            (binding.rvSeries.hasFocus() || binding.btnHeroPlaySeries.hasFocus())
+        ) {
+            binding.btnNavSeries.requestFocus()
+            return true
+        }
+
+        // Level 0: Left Navigation Rail or Root -> Double Back Exit Confirmation
+        val now = System.currentTimeMillis()
+        if (now - lastBackPressTime < 2000) {
+            finish()
+        } else {
+            lastBackPressTime = now
+            Toast.makeText(this, "Çıkmak için tekrar GERİ tuşuna basın", Toast.LENGTH_SHORT).show()
+        }
+        return true
+    }
+
+    private fun handleDigitInput(digit: Int) {
+        digitBuffer.append(digit)
+        Toast.makeText(this, "Kanal: $digitBuffer", Toast.LENGTH_SHORT).show()
+        directDialHandler.removeCallbacks(directDialRunnable)
+        directDialHandler.postDelayed(directDialRunnable, 1200)
+    }
+
+    private fun executeDirectDial() {
+        val number = digitBuffer.toString().toIntOrNull()
+        digitBuffer.clear()
+
+        if (number != null) {
+            val target = allChannels.indexOfFirst { it.index == number }
+            if (target != -1) {
+                val channel = allChannels[target]
+                onChannelPreviewFocused(channel)
+                binding.rvChannels.scrollToPosition(target)
+            } else {
+                Toast.makeText(this, "$number numaralı kanal bulunamadı", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun showSearchDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_search)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val etInput = dialog.findViewById<EditText>(R.id.etSearchDialogInput)
+        val btnApply = dialog.findViewById<Button>(R.id.btnSearchApply)
+        val btnClear = dialog.findViewById<Button>(R.id.btnSearchClear)
+
+        if (currentSearchQuery.isNotBlank()) {
+            etInput.setText(currentSearchQuery)
+            etInput.setSelection(currentSearchQuery.length)
+        }
+
+        fun performSearch() {
+            val query = etInput.text.toString().trim()
+            currentSearchQuery = query
+            dialog.dismiss()
+
+            when (currentSection) {
+                NavSection.LIVE_TV, NavSection.FAVORITES -> {
+                    filterChannels(query)
+                    binding.rvChannels.requestFocus()
+                }
+                NavSection.MOVIES -> {
+                    filterMovies(query)
+                    binding.rvMovies.requestFocus()
+                }
+                NavSection.SERIES -> {
+                    filterSeries(query)
+                    binding.rvSeries.requestFocus()
+                }
+            }
+        }
+
+        etInput.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH) {
+                performSearch()
+                true
+            } else false
+        }
+
+        btnApply.setOnClickListener {
+            performSearch()
+        }
+
+        btnClear.setOnClickListener {
+            currentSearchQuery = ""
+            dialog.dismiss()
+            when (currentSection) {
+                NavSection.LIVE_TV, NavSection.FAVORITES -> {
+                    filterChannels("")
+                    binding.rvChannels.requestFocus()
+                }
+                NavSection.MOVIES -> {
+                    movieAdapter.submitList(allMovies)
+                    binding.rvMovies.requestFocus()
+                }
+                NavSection.SERIES -> {
+                    seriesAdapter.submitList(allSeries)
+                    binding.rvSeries.requestFocus()
+                }
+            }
+        }
+
+        dialog.show()
+    }
+
+    private fun filterChannels(query: String) {
+        val trimmed = query.trim().lowercase()
+        val baseList = when (activeCategory?.categoryId) {
+            "favorites" -> allChannels.filter { it.isFavorite }
+            "all", null -> allChannels
+            else -> allChannels.filter { it.stream.categoryId == activeCategory?.categoryId }
+        }
+
+        val result = if (trimmed.isEmpty()) {
+            baseList
+        } else {
+            baseList.filter {
+                it.stream.name.lowercase().contains(trimmed) || it.index.toString() == trimmed
+            }
+        }
+
+        currentFilteredChannels.clear()
+        currentFilteredChannels.addAll(result)
+        channelAdapter.submitList(currentFilteredChannels)
+        binding.tvChannelCount.text = getString(R.string.channel_count_format, result.size)
+        binding.tvEmptyChannels.visibility = if (result.isEmpty()) View.VISIBLE else View.GONE
+
+        if (trimmed.isNotEmpty()) {
+            Toast.makeText(this, "${result.size} kanal bulundu", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun filterMovies(query: String) {
+        val trimmed = query.trim().lowercase()
+        val result = if (trimmed.isEmpty()) {
+            allMovies
+        } else {
+            allMovies.filter {
+                it.stream.name.lowercase().contains(trimmed) || it.categoryName.lowercase().contains(trimmed)
+            }
+        }
+        movieAdapter.submitList(result)
+        if (result.isNotEmpty()) setHeroMovie(result[0])
+        Toast.makeText(this, "${result.size} film bulundu", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun filterSeries(query: String) {
+        val trimmed = query.trim().lowercase()
+        val result = if (trimmed.isEmpty()) {
+            allSeries
+        } else {
+            allSeries.filter {
+                it.name.lowercase().contains(trimmed) || (it.genre?.lowercase()?.contains(trimmed) == true)
+            }
+        }
+        seriesAdapter.submitList(result)
+        if (result.isNotEmpty()) setHeroSeries(result[0])
+        Toast.makeText(this, "${result.size} dizi bulundu", Toast.LENGTH_SHORT).show()
     }
 
     private fun setHeroMovie(movie: MovieItem) {
@@ -250,11 +502,18 @@ class MainActivity : AppCompatActivity() {
         binding.tvHeroMovieTitle.text = movie.stream.name
         binding.tvHeroMovieDesc.text = "${movie.categoryName} • IMDb ${movie.ratingFormatted} • ${movie.year}"
 
-        if (!movie.stream.streamIcon.isNullOrBlank()) {
-            Glide.with(this)
-                .load(movie.stream.streamIcon)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(binding.ivHeroMovieBackdrop)
+        if (!isFinishing && !isDestroyed) {
+            try {
+                val icon = movie.stream.streamIcon
+                if (!icon.isNullOrBlank()) {
+                    Glide.with(this)
+                        .load(icon)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(binding.ivHeroMovieBackdrop)
+                }
+            } catch (e: Exception) {
+                // Ignore image load error
+            }
         }
     }
 
@@ -263,16 +522,25 @@ class MainActivity : AppCompatActivity() {
         binding.tvHeroSeriesTitle.text = series.name
         binding.tvHeroSeriesDesc.text = "${series.genre ?: "Dizi"} • IMDb ${series.rating ?: "8.5"}\n${series.plot ?: ""}"
 
-        if (!series.cover.isNullOrBlank()) {
-            Glide.with(this)
-                .load(series.cover)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(binding.ivHeroSeriesBackdrop)
+        if (!isFinishing && !isDestroyed) {
+            try {
+                val cover = series.cover
+                if (!cover.isNullOrBlank()) {
+                    Glide.with(this)
+                        .load(cover)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(binding.ivHeroSeriesBackdrop)
+                }
+            } catch (e: Exception) {
+                // Ignore image load error
+            }
         }
     }
 
     private fun playMovie(movie: MovieItem) {
         playerManager.pause()
+        previewPlayJob?.cancel()
+
         val dummyStream = LiveStream(
             num = movie.index,
             name = movie.stream.name,
@@ -295,6 +563,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun playSeries(series: SeriesItem) {
         playerManager.pause()
+        previewPlayJob?.cancel()
+
         val dummyStream = LiveStream(
             num = 1,
             name = "${series.name} - Bölüm 1",
@@ -471,7 +741,7 @@ class MainActivity : AppCompatActivity() {
             allChannels.add(item)
         }
 
-        // 2. Netflix-Style Demo Movies (Ultra HD open legal films)
+        // 2. Netflix-Style Demo Movies
         allMovies.add(
             MovieItem(
                 index = 1,
@@ -568,50 +838,37 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun filterChannels(query: String) {
-        val trimmed = query.trim().lowercase()
-        val baseList = when (activeCategory?.categoryId) {
-            "favorites" -> allChannels.filter { it.isFavorite }
-            "all", null -> allChannels
-            else -> allChannels.filter { it.stream.categoryId == activeCategory?.categoryId }
-        }
-
-        val result = if (trimmed.isEmpty()) {
-            baseList
-        } else {
-            baseList.filter {
-                it.stream.name.lowercase().contains(trimmed) || it.index.toString() == trimmed
-            }
-        }
-
-        currentFilteredChannels.clear()
-        currentFilteredChannels.addAll(result)
-        channelAdapter.submitList(currentFilteredChannels)
-        binding.tvChannelCount.text = getString(R.string.channel_count_format, result.size)
-        binding.tvEmptyChannels.visibility = if (result.isEmpty()) View.VISIBLE else View.GONE
-    }
-
     private fun onChannelPreviewFocused(channel: ChannelItem) {
         currentlyPlayingChannel = channel
         binding.tvPreviewTitle.text = channel.stream.name
         binding.tvPreviewCategory.text = channel.categoryName
         updatePreviewFavoriteState(channel)
 
-        if (!channel.stream.streamIcon.isNullOrBlank()) {
-            Glide.with(this)
-                .load(channel.stream.streamIcon)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.drawable.ic_channel_placeholder)
-                .error(R.drawable.ic_channel_placeholder)
-                .into(binding.ivPreviewLogo)
-        } else {
-            binding.ivPreviewLogo.setImageResource(R.drawable.ic_channel_placeholder)
+        if (!isFinishing && !isDestroyed) {
+            try {
+                val icon = channel.stream.streamIcon
+                if (!icon.isNullOrBlank()) {
+                    Glide.with(this)
+                        .load(icon)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.ic_channel_placeholder)
+                        .error(R.drawable.ic_channel_placeholder)
+                        .into(binding.ivPreviewLogo)
+                } else {
+                    binding.ivPreviewLogo.setImageResource(R.drawable.ic_channel_placeholder)
+                }
+            } catch (e: Exception) {
+                binding.ivPreviewLogo.setImageResource(R.drawable.ic_channel_placeholder)
+            }
         }
 
+        // 600ms debounce ensures rapid remote scrolling never overloads hardware decoders
         previewPlayJob?.cancel()
         previewPlayJob = lifecycleScope.launch {
-            delay(150)
-            playerManager.playStream(channel.streamUrl)
+            delay(600)
+            if (binding.sectionLiveTv.visibility == View.VISIBLE) {
+                playerManager.playStream(channel.streamUrl)
+            }
         }
     }
 
@@ -625,6 +882,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun openFullscreen(channel: ChannelItem) {
         playerManager.pause()
+        previewPlayJob?.cancel()
         val intent = Intent(this, FullscreenPlayerActivity::class.java).apply {
             putExtra("EXTRA_INITIAL_CHANNEL_ID", channel.stream.streamId)
         }
@@ -668,7 +926,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        updateHeaderClock()
         if (binding.sectionLiveTv.visibility == View.VISIBLE) {
             currentlyPlayingChannel?.let {
                 playerManager.playStream(it.streamUrl)
@@ -678,11 +935,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
+        previewPlayJob?.cancel()
         playerManager.pause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        directDialHandler.removeCallbacks(directDialRunnable)
+        previewPlayJob?.cancel()
         playerManager.release()
     }
 }

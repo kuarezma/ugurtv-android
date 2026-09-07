@@ -5,163 +5,248 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/tv_bg_main"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
-    <!-- ========================================== -->
-    <!-- 1. TOP NAVIGATION BAR (Header)             -->
-    <!-- ========================================== -->
+    <!-- ============================================================== -->
+    <!-- 1. LEFT NAVIGATION RAIL (Vertical TV Remote Sidebar - 88dp)     -->
+    <!-- ============================================================== -->
     <LinearLayout
-        android:id="@+id/topNavBar"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="@color/tv_bg_pane"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp">
+        android:id="@+id/navRail"
+        android:layout_width="88dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_nav_rail"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
 
-        <!-- App Logo & Brand -->
+        <!-- TV Brand Logo -->
         <ImageView
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_tv_brand_logo" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:fontFamily="sans-serif-black"
-            android:text="@string/app_name"
-            android:textColor="@color/tv_accent"
-            android:textSize="22sp" />
+        <View
+            android:layout_width="40dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="#1E2B47" />
 
-        <!-- Navigation Tabs (Remote Focusable) -->
+        <!-- Navigation Buttons (Focusable with D-Pad) -->
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="36dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:id="@+id/btnNavLiveTv"
+            android:layout_width="64dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_nav_rail_item"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:nextFocusUp="@+id/btnNavLiveTv"
+            android:nextFocusDown="@+id/btnNavMovies"
+            android:nextFocusRight="@+id/rvCategories"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:contentDescription="@string/tab_live_tv"
+                android:src="@drawable/ic_live_tv" />
 
             <TextView
-                android:id="@+id/tabLiveTv"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginEnd="12dp"
-                android:background="@drawable/bg_tab_nav"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:paddingStart="18dp"
-                android:paddingEnd="18dp"
-                android:text="@string/tab_live_tv"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Canlı"
                 android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tabMovies"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginEnd="12dp"
-                android:background="@drawable/bg_tab_nav"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:paddingStart="18dp"
-                android:paddingEnd="18dp"
-                android:text="@string/tab_movies"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tabSeries"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginEnd="12dp"
-                android:background="@drawable/bg_tab_nav"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:paddingStart="18dp"
-                android:paddingEnd="18dp"
-                android:text="@string/tab_series"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tabFavorites"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginEnd="12dp"
-                android:background="@drawable/bg_tab_nav"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:paddingStart="18dp"
-                android:paddingEnd="18dp"
-                android:text="@string/tab_favorites"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tabSettings"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:background="@drawable/bg_tab_nav"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:paddingStart="18dp"
-                android:paddingEnd="18dp"
-                android:text="@string/tab_settings"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
+                android:textSize="10sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- Right Side: Clock & Search -->
-        <TextView
-            android:id="@+id/tvHeaderClock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/tv_accent"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:text="21:15" />
+        <LinearLayout
+            android:id="@+id/btnNavMovies"
+            android:layout_width="64dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_nav_rail_item"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:nextFocusUp="@+id/btnNavLiveTv"
+            android:nextFocusDown="@+id/btnNavSeries"
+            android:nextFocusRight="@+id/rvMovies"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:contentDescription="@string/tab_movies"
+                android:src="@drawable/ic_movie" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Film"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnNavSeries"
+            android:layout_width="64dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_nav_rail_item"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:nextFocusUp="@+id/btnNavMovies"
+            android:nextFocusDown="@+id/btnNavFavorites"
+            android:nextFocusRight="@+id/rvSeries"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:contentDescription="@string/tab_series"
+                android:src="@drawable/ic_tv_series" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Dizi"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnNavFavorites"
+            android:layout_width="64dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_nav_rail_item"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:nextFocusUp="@+id/btnNavSeries"
+            android:nextFocusDown="@+id/btnNavSearch"
+            android:nextFocusRight="@+id/rvChannels"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:contentDescription="@string/tab_favorites"
+                android:src="@drawable/ic_heart_filled" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Favori"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnNavSearch"
+            android:layout_width="64dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_nav_rail_item"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:nextFocusUp="@+id/btnNavFavorites"
+            android:nextFocusDown="@+id/btnNavSettings"
+            android:nextFocusRight="@+id/rvCategories"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="Arama"
+                android:src="@drawable/ic_search" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Ara"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <!-- Flexible Spacer -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Settings Button at Bottom -->
+        <LinearLayout
+            android:id="@+id/btnNavSettings"
+            android:layout_width="64dp"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_nav_rail_item"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:nextFocusUp="@+id/btnNavSearch"
+            android:nextFocusDown="@+id/btnNavSettings"
+            android:nextFocusRight="@+id/rvCategories"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:contentDescription="@string/tab_settings"
+                android:src="@drawable/ic_settings" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Ayar"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp" />
+        </LinearLayout>
+
     </LinearLayout>
 
-    <!-- ========================================== -->
-    <!-- 2. CONTENT CONTAINER (Sections)            -->
-    <!-- ========================================== -->
+    <!-- ============================================================== -->
+    <!-- 2. MAIN CONTENT AREA (Takes full remaining space)              -->
+    <!-- ============================================================== -->
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:id="@+id/contentFrame"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <!-- SECTION A: CANLI TV (TiViMate Dual-Pane) -->
+        <!-- ========================================================== -->
+        <!-- SECTION A: CANLI TV (TiViMate Ultra Ergonomic Layout)       -->
+        <!-- ========================================================== -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/sectionLiveTv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible">
 
-            <!-- Left Pane: Categories -->
+            <!-- Column 1: Categories (Width 250dp) -->
             <LinearLayout
-                android:id="@+id/leftPane"
-                android:layout_width="260dp"
+                android:id="@+id/leftCategoriesPane"
+                android:layout_width="250dp"
                 android:layout_height="match_parent"
                 android:background="@color/tv_bg_pane"
                 android:orientation="vertical"
-                android:paddingStart="16dp"
-                android:paddingTop="16dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="16dp"
+                android:padding="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -169,9 +254,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Kategoriler"
+                    android:text="KATEGORİLER"
                     android:textColor="@color/tv_accent"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -181,46 +266,27 @@
                     android:layout_marginTop="12dp"
                     android:descendantFocusability="afterDescendants"
                     android:focusable="true"
+                    android:nextFocusLeft="@+id/btnNavLiveTv"
+                    android:nextFocusRight="@+id/rvChannels"
                     tools:listitem="@layout/item_category" />
             </LinearLayout>
 
-            <!-- Center Pane: Channels -->
+            <!-- Column 2: Channels List (Width 360dp) -->
             <LinearLayout
-                android:id="@+id/centerPane"
-                android:layout_width="380dp"
+                android:id="@+id/centerChannelsPane"
+                android:layout_width="360dp"
                 android:layout_height="match_parent"
                 android:background="@color/tv_bg_main"
                 android:orientation="vertical"
-                android:paddingStart="16dp"
-                android:paddingTop="16dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="16dp"
+                android:padding="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/leftPane"
+                app:layout_constraintStart_toEndOf="@+id/leftCategoriesPane"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <EditText
-                    android:id="@+id/etSearch"
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:background="@drawable/bg_channel_item"
-                    android:drawableStart="@drawable/ic_search"
-                    android:drawablePadding="10dp"
-                    android:focusable="true"
-                    android:hint="@string/search_hint"
-                    android:imeOptions="actionSearch"
-                    android:inputType="text"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:singleLine="true"
-                    android:textColor="@color/tv_text_primary"
-                    android:textColorHint="@color/tv_text_muted"
-                    android:textSize="14sp" />
-
+                <!-- Header with Title & Count -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -231,15 +297,16 @@
                         android:layout_weight="1"
                         android:text="@string/cat_all"
                         android:textColor="@color/tv_text_primary"
-                        android:textSize="17sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvChannelCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/tv_text_muted"
+                        android:textColor="@color/tv_accent"
                         android:textSize="13sp"
+                        android:textStyle="bold"
                         tools:text="142 Kanal" />
                 </LinearLayout>
 
@@ -247,10 +314,12 @@
                     android:id="@+id/rvChannels"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="12dp"
                     android:layout_weight="1"
                     android:descendantFocusability="afterDescendants"
                     android:focusable="true"
+                    android:nextFocusLeft="@+id/rvCategories"
+                    android:nextFocusRight="@+id/btnExpandFullscreen"
                     tools:listitem="@layout/item_channel" />
 
                 <TextView
@@ -265,25 +334,26 @@
                     android:visibility="gone" />
             </LinearLayout>
 
-            <!-- Right Pane: Live Preview Player -->
+            <!-- Column 3: Live Preview Player & Info (Remaining Width) -->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/rightPane"
+                android:id="@+id/rightPreviewPane"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:background="@color/tv_bg_pane"
-                android:padding="20dp"
+                android:padding="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/centerPane"
+                app:layout_constraintStart_toEndOf="@+id/centerChannelsPane"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <!-- Video Player Card -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/playerCard"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:cardBackgroundColor="#000000"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="10dp"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="14dp"
                     app:layout_constraintDimensionRatio="16:9"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -298,8 +368,8 @@
 
                     <ProgressBar
                         android:id="@+id/pbPreviewLoading"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
                         android:layout_gravity="center"
                         android:indeterminateTint="@color/tv_accent"
                         android:visibility="gone" />
@@ -308,27 +378,30 @@
                         android:id="@+id/btnExpandFullscreen"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="?attr/selectableItemBackground"
-                        android:focusable="true">
+                        android:background="@drawable/bg_movie_card"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:nextFocusLeft="@+id/rvChannels"
+                        android:nextFocusDown="@+id/ivPreviewFavorite">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom|end"
-                            android:layout_margin="14dp"
+                            android:layout_margin="16dp"
                             android:background="@drawable/bg_badge_live"
-                            android:paddingStart="10dp"
-                            android:paddingTop="6dp"
-                            android:paddingEnd="10dp"
-                            android:paddingBottom="6dp"
+                            android:paddingStart="12dp"
+                            android:paddingTop="8dp"
+                            android:paddingEnd="12dp"
+                            android:paddingBottom="8dp"
                             android:text="@string/press_ok_fullscreen"
                             android:textColor="#FFFFFF"
-                            android:textSize="13sp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
                     </FrameLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- Channel Info Details -->
+                <!-- Channel Details Under Preview -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -347,8 +420,8 @@
 
                         <ImageView
                             android:id="@+id/ivPreviewLogo"
-                            android:layout_width="64dp"
-                            android:layout_height="44dp"
+                            android:layout_width="72dp"
+                            android:layout_height="48dp"
                             android:contentDescription="@null"
                             android:scaleType="fitCenter"
                             android:src="@drawable/ic_channel_placeholder" />
@@ -366,7 +439,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-medium"
                                 android:textColor="@color/tv_text_primary"
-                                android:textSize="22sp"
+                                android:textSize="24sp"
                                 tools:text="TRT 1 HD" />
 
                             <TextView
@@ -374,43 +447,48 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/tv_text_secondary"
-                                android:textSize="14sp"
+                                android:textSize="15sp"
                                 tools:text="Ulusal Kanallar" />
                         </LinearLayout>
 
                         <ImageView
                             android:id="@+id/ivPreviewFavorite"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="@drawable/bg_nav_rail_item"
                             android:contentDescription="@string/cat_favorites"
                             android:focusable="true"
+                            android:nextFocusLeft="@+id/rvChannels"
+                            android:nextFocusUp="@+id/btnExpandFullscreen"
                             android:src="@drawable/ic_heart" />
                     </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="24dp"
                         android:text="@string/remote_shortcuts_title"
                         android:textColor="@color/tv_text_primary"
-                        android:textSize="14sp"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:lineSpacingExtra="4dp"
+                        android:layout_marginTop="8dp"
+                        android:lineSpacingExtra="5dp"
                         android:text="@string/remote_shortcuts_desc"
                         android:textColor="@color/tv_text_secondary"
                         android:textSize="13sp" />
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- SECTION B: NETFLIX TARZI FİLMLER (Movies Section) -->
+        <!-- ========================================================== -->
+        <!-- SECTION B: FİLMLER (Netflix Tarzı 65" TV Sinema Görünümü)   -->
+        <!-- ========================================================== -->
         <LinearLayout
             android:id="@+id/sectionMovies"
             android:layout_width="match_parent"
@@ -420,14 +498,14 @@
             android:paddingEnd="24dp"
             android:visibility="gone">
 
-            <!-- Hero Movie Billboard (Top) -->
+            <!-- Hero Movie Billboard -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="#0F172A"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="#0D1424"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="12dp">
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -441,13 +519,11 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/tv_banner_bg" />
 
-                    <!-- Overlay Gradient -->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/bg_osd_panel" />
 
-                    <!-- Hero Info -->
                     <LinearLayout
                         android:layout_width="600dp"
                         android:layout_height="wrap_content"
@@ -459,10 +535,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_badge_live"
-                            android:paddingStart="8dp"
-                            android:paddingTop="2dp"
-                            android:paddingEnd="8dp"
-                            android:paddingBottom="2dp"
+                            android:paddingStart="10dp"
+                            android:paddingTop="3dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="3dp"
                             android:text="@string/featured_movie"
                             android:textColor="#FFFFFF"
                             android:textSize="11sp"
@@ -485,7 +561,7 @@
                             android:layout_marginTop="4dp"
                             android:ellipsize="end"
                             android:maxLines="2"
-                            android:text="Bir grup kaşif, insanlığın hayatta kalmasını sağlamak için solucan deliğinden geçerek uzayın derinliklerine doğru tehlikeli bir yolculuğa çıkar."
+                            android:text="Bir grup kaşif, insanlığın geleceği için uzayın derinliklerine yolculuk yapar."
                             android:textColor="@color/tv_text_secondary"
                             android:textSize="14sp" />
 
@@ -499,42 +575,29 @@
                             <Button
                                 android:id="@+id/btnHeroPlayMovie"
                                 android:layout_width="wrap_content"
-                                android:layout_height="44dp"
+                                android:layout_height="46dp"
                                 android:background="@drawable/bg_btn_netflix_play"
                                 android:focusable="true"
                                 android:fontFamily="sans-serif-medium"
+                                android:nextFocusDown="@+id/rvMovies"
                                 android:paddingStart="24dp"
                                 android:paddingEnd="24dp"
                                 android:text="@string/play_now"
                                 android:textColor="#000000"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
-
-                            <Button
-                                android:id="@+id/btnHeroFavMovie"
-                                android:layout_width="wrap_content"
-                                android:layout_height="44dp"
-                                android:layout_marginStart="12dp"
-                                android:background="@drawable/bg_channel_item"
-                                android:focusable="true"
-                                android:paddingStart="18dp"
-                                android:paddingEnd="18dp"
-                                android:text="@string/add_to_fav"
-                                android:textColor="#FFFFFF"
-                                android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
                 </FrameLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Movies Grid / Row -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Tüm Filmler"
+                android:text="TÜM FİLMLER"
                 android:textColor="@color/tv_accent"
-                android:textSize="18sp"
+                android:textSize="17sp"
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -545,10 +608,14 @@
                 android:layout_weight="1"
                 android:descendantFocusability="afterDescendants"
                 android:focusable="true"
+                android:nextFocusLeft="@+id/btnNavMovies"
+                android:nextFocusUp="@+id/btnHeroPlayMovie"
                 tools:listitem="@layout/item_movie_card" />
         </LinearLayout>
 
-        <!-- SECTION C: NETFLIX TARZI DİZİLER (Series Section) -->
+        <!-- ========================================================== -->
+        <!-- SECTION C: DİZİLER (Netflix Tarzı Dizi Görünümü)            -->
+        <!-- ========================================================== -->
         <LinearLayout
             android:id="@+id/sectionSeries"
             android:layout_width="match_parent"
@@ -562,9 +629,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="#0F172A"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="#0D1424"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="12dp">
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -594,10 +661,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_badge_live"
-                            android:paddingStart="8dp"
-                            android:paddingTop="2dp"
-                            android:paddingEnd="8dp"
-                            android:paddingBottom="2dp"
+                            android:paddingStart="10dp"
+                            android:paddingTop="3dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="3dp"
                             android:text="@string/featured_series"
                             android:textColor="#FFFFFF"
                             android:textSize="11sp"
@@ -620,18 +687,19 @@
                             android:layout_marginTop="4dp"
                             android:ellipsize="end"
                             android:maxLines="2"
-                            android:text="Kanser teşhisi konan bir lise kimya öğretmeni, ailesinin geleceğini güvence altına almak için eski öğrencisiyle ortaklaşa metamfetamin üretmeye başlar."
+                            android:text="Kimya öğretmeni Walter White'ın gerilim dolu macerası."
                             android:textColor="@color/tv_text_secondary"
                             android:textSize="14sp" />
 
                         <Button
                             android:id="@+id/btnHeroPlaySeries"
                             android:layout_width="wrap_content"
-                            android:layout_height="44dp"
+                            android:layout_height="46dp"
                             android:layout_marginTop="12dp"
                             android:background="@drawable/bg_btn_netflix_play"
                             android:focusable="true"
                             android:fontFamily="sans-serif-medium"
+                            android:nextFocusDown="@+id/rvSeries"
                             android:paddingStart="24dp"
                             android:paddingEnd="24dp"
                             android:text="@string/play_now"
@@ -646,9 +714,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Tüm Diziler"
+                android:text="TÜM DİZİLER"
                 android:textColor="@color/tv_accent"
-                android:textSize="18sp"
+                android:textSize="17sp"
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -659,8 +727,11 @@
                 android:layout_weight="1"
                 android:descendantFocusability="afterDescendants"
                 android:focusable="true"
+                android:nextFocusLeft="@+id/btnNavSeries"
+                android:nextFocusUp="@+id/btnHeroPlaySeries"
                 tools:listitem="@layout/item_series_card" />
         </LinearLayout>
 
     </FrameLayout>
+
 </LinearLayout>

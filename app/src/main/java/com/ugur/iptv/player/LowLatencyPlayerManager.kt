@@ -97,24 +97,29 @@ class LowLatencyPlayerManager(private val context: Context) {
         val player = exoPlayer ?: return
         if (currentUrl == url && player.isPlaying) return
 
-        currentUrl = url
-        onBufferingStateChanged?.invoke(true)
+        try {
+            currentUrl = url
+            onBufferingStateChanged?.invoke(true)
 
-        val uri = Uri.parse(url)
-        val mediaItem = MediaItem.Builder()
-            .setUri(uri)
-            .setLiveConfiguration(
-                MediaItem.LiveConfiguration.Builder()
-                    .setMaxPlaybackSpeed(1.02f)
-                    .setMinPlaybackSpeed(0.98f)
-                    .setTargetOffsetMs(1500)
-                    .build()
-            )
-            .build()
+            val uri = Uri.parse(url)
+            val mediaItem = MediaItem.Builder()
+                .setUri(uri)
+                .setLiveConfiguration(
+                    MediaItem.LiveConfiguration.Builder()
+                        .setMaxPlaybackSpeed(1.02f)
+                        .setMinPlaybackSpeed(0.98f)
+                        .setTargetOffsetMs(1500)
+                        .build()
+                )
+                .build()
 
-        player.setMediaItem(mediaItem)
-        player.prepare()
-        player.playWhenReady = true
+            player.setMediaItem(mediaItem)
+            player.prepare()
+            player.playWhenReady = true
+        } catch (e: Exception) {
+            onBufferingStateChanged?.invoke(false)
+            onErrorOccurred?.invoke(e.localizedMessage ?: "Yayın açılamadı")
+        }
     }
 
     fun pause() {
